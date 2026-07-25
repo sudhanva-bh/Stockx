@@ -22,6 +22,29 @@ In practical terms: you run this project and you get a **web dashboard** where a
 
 The AI agent will then autonomously query the database through MCP tool calls, aggregate the data, and respond with a fully rendered, interactive UI component — a Kanban board, a bar chart, a KPI card, a data table — drawn directly inside the chat panel. No custom API endpoints. No hand-written SQL in the frontend. No glue code.
 
+---
+
+<table>
+  <tr>
+    <td width="240" valign="middle">
+      <a href="https://youtu.be/TO6EByhE_u4">
+        <img src="https://img.youtube.com/vi/TO6EByhE_u4/hqdefault.jpg" alt="Stockx Video Demo" width="180" />
+      </a>
+    </td>
+    <td valign="middle">
+      🎬 <b><a href="https://youtu.be/TO6EByhE_u4">Watch the Stockx Video Article on YouTube</a></b><br/>
+    </td>
+  </tr>
+</table>
+
+---
+
+### Core Technologies
+
+- **JDX**: A lightweight and non-intrusive Object-Relational Mapping (ORM) framework that maps relational data to Java/JSON objects. JDX is a Java ORM engine that reverse-engineers relational database schemas into a curated Java/JSON object model — the foundational data-access layer beneath Gilhari.
+- **Gilhari**: A RESTful microservice framework, built on JDX, that turns a database into a governed object API. Gilhari packages a JDX object model as a RESTful microservice — exposing your database as a curated, object-oriented REST API with no hand-written server code.
+- **ORMCP**: An MCP server that connects AI agents to a relational database via the Model Context Protocol. ORMCP bridges AI agents to your database through Gilhari, giving them a governed, object-oriented view of your data — not raw SQL or table rows — via natural language. As an MCP-compliant semantic layer, ORMCP exposes enterprise data as curated business objects (e.g., Customers, Orders, Products), rather than requiring agents to interact with schemas and SQL directly. This simplifies how AI applications interact with structured data by improving reasoning clarity, reducing token usage, and introducing a cleaner governance boundary.
+
 ### Why This Matters
 
 - **Zero SQL in your AI layer.** The ORMCP server introspects Gilhari's REST surface and auto-generates typed MCP tools (`query_InventoryItems`, `insert_StockTransactions`, etc.). The LLM never writes raw SQL for standard CRUD — it calls safe, schema-validated functions.

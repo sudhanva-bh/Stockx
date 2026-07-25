@@ -403,7 +403,7 @@ async def process_chat_message(user_message: str, mcp_client: MCPClient) -> Asyn
             
             structured_llm = llm.with_structured_output(AgentResponse)
             
-            struct_msgs = current_messages + [SystemMessage(content="Now that you have gathered the data, provide your final response using the required JSON schema structure.")]
+            struct_msgs = current_messages + [HumanMessage(content="Now that you have gathered the data, provide your final response using the required JSON schema structure.")]
             try:
                 parsed = await structured_llm.ainvoke(struct_msgs)
             except Exception as e:
