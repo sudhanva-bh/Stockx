@@ -13,7 +13,7 @@
 
 This directory contains the FastAPI-based agentic backend that powers the AI Analytics feature of the supply chain dashboard. It fulfills three responsibilities:
 
-1. **MCP Client Lifecycle Management.** On startup, the server spawns and connects to the ORMCP server process via standard I/O (`stdio`). The ORMCP server introspects the running Gilhari microservice and exposes the supply chain database as a collection of typed MCP tools. This connection is maintained for the lifetime of the FastAPI process.
+1. **MCP Client Lifecycle Management.** On startup, the server spawns and connects to the ORMCP server process via standard I/O (`stdio`). The ORMCP server connects to the running Gilhari microservice and exposes its stable, generic set of MCP tools that operate over any business objects defined in the attached object model. This connection is maintained for the lifetime of the FastAPI process.
 
 2. **Agentic LangGraph Loop.** When a chat request arrives, a LangGraph `StateGraph` takes control. It runs an iterative tool-calling loop: the LLM selects an MCP tool, the backend executes it against the real database, the result is appended to the message history, and the process repeats until the agent determines it has enough data to generate a response.
 
@@ -39,7 +39,7 @@ This directory contains the FastAPI-based agentic backend that powers the AI Ana
 
 ## Prerequisites
 
-- Python 3.10 or later
+- Python 3.12 or later
 - The `ormcp-server` package installed in the root `.venv` (at `../.venv/Scripts/python.exe`)
 - The Docker infrastructure (SQL Server and Gilhari) must be running before starting this service
 
@@ -130,8 +130,8 @@ Directly invokes a named MCP tool with the provided JSON arguments. Used by the 
 **Request body:**
 ```json
 {
-  "tool_name": "insert_StockTransaction",
-  "args_json": "{\"itemID\": 101, \"quantityChanged\": -5, \"transactionType\": \"SALE\", \"timestamp\": \"2024-01-15T10:00:00\"}"
+  "tool_name": "insert_objects",
+  "args_json": "{\"class_name\": \"StockTransaction\", \"objects\": [{\"itemID\": 101, \"quantityChanged\": -5, \"transactionType\": \"SALE\", \"timestamp\": \"2024-01-15T10:00:00\"}]}"
 }
 ```
 
